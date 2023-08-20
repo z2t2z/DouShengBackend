@@ -5,10 +5,9 @@ import (
 )
 
 func main() {
-	// 基于Gin框架的极简版抖音开发
 	r := gin.Default()
 	initDB()
-	r.Static("/public", "./public")
+	r.Static("/public/videos", "./public/videos")
 
 	// 基础接口
 	getFeed(r)
@@ -17,7 +16,5 @@ func main() {
 	user_getInfo(r)
 	post_videos(r)
 	user_getList(r)
-	// get_PublishList(r)
-	// abcde
 	r.Run(":9090")
 }

@@ -63,7 +63,7 @@ type FeedResponse struct {
 
 // Video
 type Video struct {
-	ID int64 `json:"id"` // 视频唯一标识
+	ID             int64     `json:"id"`                               // 视频唯一标识
 	User_id        int64     `json:"user_id"`                          // 作者id
 	User_token     string    `json:"user_token"`                       // 作者token
 	Author         User      `gorm:"foreignKey:User_id" json:"Author"` // 视频作者信息
@@ -74,6 +74,23 @@ type Video struct {
 	Play_URL       string    `json:"play_url"`                         // 视频播放地址
 	Title          string    `json:"title"`                            // 视频标题
 	Create_Date    time.Time `json:"Create_Date"`                      // 记录创建日期
+}
+
+// 点赞表
+type Favorite struct {
+	ID       int64 `json:"id"`       // 唯一标识
+	User_id  int64 `json:"user_id"`  // 作者id
+	Video_id int64 `json:"video_id"` // 此作者点赞的视频id
+}
+
+// 视频评论表
+type Comment struct {
+	ID          int64     `json:"id"`          // 唯一标识
+	User_id     int64     `json:"user_id"`     // 作者id
+	Video_id    int64     `json:"video_id"`    // 视频id
+	Content     string    `json:"content"`     // 评论内容
+	Create_Date time.Time `json:"Create_Date"` // 记录创建日期
+	Is_delete   bool      `json:"is_delete"`   // 逻辑删除
 }
 
 // type Video struct {

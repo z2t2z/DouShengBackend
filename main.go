@@ -16,5 +16,10 @@ func main() {
 	user_getInfo(r)
 	post_videos(r)
 	user_getList(r)
+
+	// 互动接口
+	User_Like(r)
+	Comment_Action(r)
+	
 	r.Run(":9090")
 }

@@ -43,6 +43,7 @@ type User struct {
 	// Videos          []Video   `gorm:"ForeignKey:DeviceHexCode;AssociationForeignKey:DeviceHexCode" json:"video"`
 }
 
+// deprecated
 type User_From_Pamphlet struct {
 	ID              int64  `json:"id,omitempty"`               // 用户id
 	Avatar          string `json:"avatar,omitempty"`           // 用户头像
@@ -55,13 +56,6 @@ type User_From_Pamphlet struct {
 	Signature       string `json:"signature,omitempty"`        // 个人简介
 	TotalFavorited  int64  `json:"total_favorited,omitempty"`  // 获赞数量
 	WorkCount       int64  `json:"work_count,omitempty"`       // 作品数
-}
-
-type ApifoxModel struct {
-	NextTime   *int64  `json:"next_time"`   // 本次返回的视频中，发布最早的时间，作为下次请求时的latest_time
-	StatusCode int64   `json:"status_code"` // 状态码，0-成功，其他值-失败
-	StatusMsg  *string `json:"status_msg"`  // 返回状态描述
-	VideoList  []Video `json:"video_list"`  // 视频列表
 }
 
 type VideoListResponse struct {
@@ -107,7 +101,7 @@ type Comment struct {
 	Is_delete   bool      `json:"is_delete"`   // 逻辑删除
 }
 
-// 用来返回前端的，数据库表的子集
+// 用来返回前端响应的
 type CommentList struct {
 	Id         int64  `json:"id,omitempty"`
 	User       User   `json:"user,omitempty"`

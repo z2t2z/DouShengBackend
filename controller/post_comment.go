@@ -70,6 +70,14 @@ func post_Comment(c *gin.Context) {
 		comment_id, _ := strconv.ParseInt(comment_sid, 10, 64)
 		fmt.Println(comment_id)
 
+		// comment表删除记录
+		var comment Comment
+		if err := db.Where(Comment{ID: comment_id}).Delete(&comment).Error; err != nil {
+			c.JSON(http.StatusOK, Response{
+				StatusCode: 1,
+				StatusMsg:  "post_Comment error 4",
+			})
+		}
 		// video表评论数-1
 		var video Video
 		if err := db.Model(&video).Where("id = ? ", video_id).Update("comment_count", gorm.Expr("comment_count - ?", 1)).Error; err != nil {
@@ -78,15 +86,6 @@ func post_Comment(c *gin.Context) {
 				StatusMsg:  "post_Comment error 3",
 			})
 			return
-		}
-
-		// comment表删除记录
-		var comment Comment
-		if err := db.Where(Comment{ID: comment_id}).Delete(&comment).Error; err != nil {
-			c.JSON(http.StatusOK, Response{
-				StatusCode: 1,
-				StatusMsg:  "post_Comment error 4",
-			})
 		}
 
 		c.JSON(http.StatusOK, Response{

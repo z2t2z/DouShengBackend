@@ -7,6 +7,13 @@ import (
 
 var db *gorm.DB
 
+func min(a int64, b int64) int64 {
+	if a < b {
+		return a
+	}
+	return b
+}
+
 func InitDB() {
 	dsn := "root:159357zt@(127.0.0.1:3306)/bytedancedb?charset=utf8mb4&parseTime=True&loc=Local"
 	var err error

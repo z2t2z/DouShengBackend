@@ -74,7 +74,8 @@ type Video struct {
 	ID             int64     `json:"id"`                               // 视频唯一标识
 	User_id        int64     `json:"user_id"`                          // 作者id
 	User_token     string    `json:"user_token"`                       // 作者token
-	Author         User      `gorm:"foreignKey:User_id" json:"Author"` // 视频作者信息
+	User_name      string    `json:"User_name"`                        // 作者名
+	Author         User      `gorm:"foreignKey:User_id" json:"author"` // 视频作者信息
 	Comment_Count  int64     `json:"comment_count"`                    // 视频的评论总数
 	Cover_URL      string    `json:"cover_url"`                        // 视频封面地址
 	Favorite_Count int64     `json:"favorite_count"`                   // 视频的点赞总数
@@ -101,12 +102,12 @@ type Comment struct {
 	Is_delete   bool      `json:"is_delete"`   // 逻辑删除
 }
 
-// 用来返回前端响应的
+// 返回前端
 type CommentList struct {
-	Id         int64  `json:"id,omitempty"`
-	User       User   `json:"user,omitempty"`
-	Content    string `json:"content,omitempty"`
-	CreateDate string `json:"create_date,omitempty"`
+	Id          int64  `json:"id,omitempty"`
+	User        User   `json:"user,omitempty"`
+	Content     string `json:"content,omitempty"`
+	Create_Date string `json:"create_date,omitempty"`
 }
 
 // 返回前端

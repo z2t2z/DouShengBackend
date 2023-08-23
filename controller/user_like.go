@@ -86,7 +86,6 @@ func user_Like(c *gin.Context) {
 		})
 
 	} else if action_type == "2" { // 取消点赞
-
 		// 硬删除：直接在favorite表中抹去记录
 		if err := db.Where(Favorite{User_id: user_id, Video_id: video_id}).Delete(&favorite).Error; err != nil {
 			c.JSON(http.StatusOK, Response{

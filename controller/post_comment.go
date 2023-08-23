@@ -23,10 +23,7 @@ func post_Comment(c *gin.Context) {
 
 	video_sid := c.Query("video_id")
 	action_type := c.Query("action_type")
-
 	video_id, _ := strconv.ParseInt(video_sid, 10, 64)
-
-	// fmt.Println(user.ID, token, video_id)
 
 	if action_type == "1" { // 新增评论
 		comment_text := c.Query("comment_text")
@@ -46,6 +43,7 @@ func post_Comment(c *gin.Context) {
 			})
 			return
 		}
+		fmt.Println("receive comment id is : ", comment.ID)
 		// video表评论数+1
 		var video Video
 		if err := db.Model(&video).Where("id = ? ", video_id).Update("comment_count", gorm.Expr("comment_count + ?", 1)).Error; err != nil {
@@ -57,18 +55,16 @@ func post_Comment(c *gin.Context) {
 		}
 		c.JSON(http.StatusOK, CommentActionResponse{Response: Response{StatusCode: 0},
 			CommentList: CommentList{
-				Id:         comment.ID,
-				User:       user,
-				Content:    comment_text,
-				CreateDate: comment.Create_Date.String(),
+				Id:          comment.ID,
+				User:        user,
+				Content:     comment_text,
+				Create_Date: comment.Create_Date.String(),
 			}})
-
-		// fmt.Println(comment.ID, comment.Content)	
 
 	} else if action_type == "2" { //删除评论
 		comment_sid := c.Query("comment_id")
 		comment_id, _ := strconv.ParseInt(comment_sid, 10, 64)
-		fmt.Println(comment_id)
+		fmt.Println("Before delete a comment, receive id is : ", comment_id)
 
 		// comment表删除记录
 		var comment Comment
@@ -77,6 +73,7 @@ func post_Comment(c *gin.Context) {
 				StatusCode: 1,
 				StatusMsg:  "post_Comment error 4",
 			})
+			return
 		}
 		// video表评论数-1
 		var video Video

@@ -25,7 +25,7 @@ func user_Register(c *gin.Context) {
 			StatusMsg:  "User already exists",
 		})
 		return
-	} 
+	}
 	// 先插入数据库
 	u := User{
 		Name:       username,
@@ -48,7 +48,6 @@ func user_Register(c *gin.Context) {
 	})
 
 }
-
 
 func user_Login(c *gin.Context) {
 	username := c.Query("username")
@@ -127,23 +126,8 @@ func user_Get_PublishList(c *gin.Context) {
 		Token: token,
 	}
 
-	// result := db.Where("token = ?", token).First(&user)
-
-	// if result.RowsAffected == 0 {
-	// 	c.JSON(http.StatusOK, UserLoginResponse{
-	// 		StatusCode: 1,
-	// 		StatusMsg:  "User doesn't exist",
-	// 	})
-	// 	return
-	// }
-
 	var videoList []Video
-
-	// rows, err := db.Table("videos").Select("Id,  where user_token = ?", token).Rows()
-	// rows := db.Query("select id, name, age from users where id= ? ",1)
-	// var video Video
-
-	rows, err := db.Table("videos").Select("Author", "Play_Url", "Cover_Url", "Favorite_Count", "Comment_Count", "Is_Favorite").Where("user_token = ?", token).Rows()
+	rows, err := db.Table("videos").Select("Play_Url", "Cover_Url", "Favorite_Count", "Comment_Count", "Is_Favorite").Where("user_token = ?", token).Rows()
 	if err != nil {
 		fmt.Println("select db failed in func: GetList, err:", err)
 		return
@@ -152,7 +136,7 @@ func user_Get_PublishList(c *gin.Context) {
 	for rows.Next() {
 		var (
 			// ID            int64
-			Author        string
+			// User_name        string
 			Play_Url       string
 			Cover_URL      string
 			Favorite_Count int64
@@ -160,7 +144,7 @@ func user_Get_PublishList(c *gin.Context) {
 			Is_Favorite    bool
 		)
 
-		err := rows.Scan(&Author, &Play_Url, &Cover_URL, &Favorite_Count, &Comment_Count, &Is_Favorite)
+		err := rows.Scan(&Play_Url, &Cover_URL, &Favorite_Count, &Comment_Count, &Is_Favorite)
 		if err != nil {
 			// log.Fatal(err)
 			fmt.Println(err)
@@ -168,7 +152,7 @@ func user_Get_PublishList(c *gin.Context) {
 
 		v := Video{
 			// ID:            ID,
-			Author:        user,
+			Author:         user,
 			Play_URL:       Play_Url,
 			Cover_URL:      Cover_URL,
 			Favorite_Count: Favorite_Count,

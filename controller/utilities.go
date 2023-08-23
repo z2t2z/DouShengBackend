@@ -17,9 +17,7 @@ func min(a int64, b int64) int64 {
 func InitDB() {
 	dsn := "root:159357zt@(127.0.0.1:3306)/bytedancedb?charset=utf8mb4&parseTime=True&loc=Local"
 	var err error
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
-		// DisableForeignKeyConstraintWhenMigrating: true,
-	})
+	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	  
 	if err != nil {
 		panic(err)
